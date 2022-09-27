@@ -13,8 +13,7 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
-    width: 80%;
+    resize: both;
 }
 
 .main {
