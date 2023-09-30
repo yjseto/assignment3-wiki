@@ -1,4 +1,4 @@
-# assignment4-wiki
+# assignment3-wiki
 
 To get started, fork this repo into a directory of your choice. Then, cd to that directory and do the following:
 ```
