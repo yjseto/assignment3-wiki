@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Edit entry
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'delete' %}" method="post">
+        <table class="table table-borderless">
+            {% csrf_token %}
+            <tr><td></td>
+            <td>
+                <input type="submit" value="Delete">
+            </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}
