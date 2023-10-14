@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import markdown2
 from . import util
 from .forms import NewEntryForm
@@ -23,11 +23,11 @@ def title(request, entry):
     # if entry exists, fetch markdown for the page
     return render(request, "encyclopedia/entry.html", {
         "title": entry,
-        "body": util.get_entry(entry)
+        "body": markdown2.markdown(util.get_entry(entry))
     })
 
 def search(request):
-    query = request.POST['q'] # query from search form
+    query = request.GET['q'] # query from search form
     entries = util.list_entries() # list of all entries
     matches = [] # empty list to store partial matches
     if query is not None:
@@ -65,9 +65,10 @@ def new(request):
                     })
             # save valid entry and redirect to the new page
             util.save_entry(title, body)
-            return HttpResponseRedirect(reverse("title", kwargs={
-                "entry": title
-                }))
+            return redirect('title', entry=title)
+            # return HttpResponseRedirect(reverse("title", kwargs={
+            #     "entry": title
+            #     }))
         else:
             # return invalid form back to user
             return render(request, "encyclopedia/new.html", {
@@ -127,7 +128,10 @@ def random_entry(request):
     return HttpResponseRedirect(reverse("title", kwargs={
                 "entry": pick
             }))
-    
+def random_entry(request):
+    entrylist = util.list_entries() # all entry titles
+    return redirect('title', entry=random.choice(entrylist))
+   
 
 
 def md_html(request):
